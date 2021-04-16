@@ -1,30 +1,45 @@
-package com.BlogPessoal.Blog.Model;
+package blog.blog.model;
+
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 
 @Entity
 @Table(name = "postagem")
-public class Postagem {
-	@Id 
+public class PostagemModel {
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@NotNull
-	@Size(min = 5, max = 20)
+	@Size(min = 1, max = 200)
 	private String titulo;
 	
 	@NotNull
-	@Size(min = 15, max = 500)
-	private String texto;
+	@Size(min = 1, max = 500)
+	private String text;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date data = new java.sql.Date(System.currentTimeMillis());
+
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private TemaModel tema;
+	
 	
 	public long getId() {
 		return id;
@@ -42,23 +57,21 @@ public class Postagem {
 		this.titulo = titulo;
 	}
 
-	public String getTexto() {
-		return texto;
+	public String getText() {
+		return text;
 	}
 
-	public void setTexto(String texto) {
-		this.texto = texto;
+	public void setText(String text) {
+		this.text = text;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getData() {
+		return data;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date = new java.sql.Date(System.currentTimeMillis()); 
+	public void setData(Date data) {
+		this.data = data;
+	} 
+	
 	
 }
